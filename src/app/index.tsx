@@ -1,7 +1,6 @@
 import { ScrollView, Text, TextInput, TouchableOpacity, View, Image } from "react-native";
 import Constants from "expo-constants"
 import React, { useState } from "react";
-import { TextInputMask } from 'react-native-masked-text';
 
 const StatusBarHeight = Constants.statusBarHeight
 
