@@ -1,6 +1,7 @@
 import { ScrollView, Text, TextInput, TouchableOpacity, View, Image } from "react-native";
 import Constants from "expo-constants"
-import { useState } from "react";
+import React, { useState } from "react";
+import { TextInputMask } from 'react-native-masked-text';
 
 const StatusBarHeight = Constants.statusBarHeight
 
@@ -15,14 +16,14 @@ export default function Index() {
   const [ValueTaxa, SetValueTaxa] = useState("")
 
   //Coletar dados de horas.
-    const [HoraP, SetHoraP] = useState("")
-    const [MinP, SetMinP] = useState("")
-    const [HoraPF, SetHoraPF] = useState("")
-    const [MinPF, SetMinPF] = useState("")
-    const [HoraN, SetHoraN] = useState("")
-    const [MinN, SetMinN] = useState("")
-    const [HoraNF, SetHoraNF] = useState("")
-    const [MinNF, SetMinNF] = useState("")
+  const [HoraP, SetHoraP] = useState("")
+  const [MinP, SetMinP] = useState("")
+  const [HoraPF, SetHoraPF] = useState("")
+  const [MinPF, SetMinPF] = useState("")
+  const [HoraN, SetHoraN] = useState("")
+  const [MinN, SetMinN] = useState("")
+  const [HoraNF, SetHoraNF] = useState("")
+  const [MinNF, SetMinNF] = useState("")
 
   //Valores para divulgação
   const [ValueLiq, SetValueLiq] = useState(0)
@@ -83,7 +84,7 @@ function TaxaAdmin () { //Valor do desconto da taxa de administração
 }
 
 function Salario() { //Função final para valor Líquido
-    
+
     let ValorDescINSS = DescontoINSS(); //Valor do desconto do INSS
     SetValueDescINSS(ValorDescINSS)
 
@@ -133,21 +134,55 @@ function Salario() { //Função final para valor Líquido
 
 
 }
+
   return (
     <ScrollView className="bg-BackgColor">
 
       <View className=" h-[28vh] w-full items-center justify-start flex-collum gap-y-3" style={{marginTop: StatusBarHeight}}>
         <Text className="text-white text-2xl font-light">Valores da Cooperativa</Text>
         <View className="w-full flex-row px-1 gap-x-7">
-          <TextInput keyboardType="numeric" maxLength={5} className="rounded-xl w-40 h-10 bg-white placeholder:p-2" placeholder="Valor plantão P" value={ValueP} onChangeText={(text) => SetValueP(text)}></TextInput>
-          <TextInput keyboardType="numeric" className="rounded-xl w-40 h-10 bg-white placeholder:p-2" placeholder="Valor plantão PF" value={ValuePF} onChangeText={(text) =>  SetValuePF(text)}></TextInput>
+          {/* Input valor P */}
+          <TextInput
+            keyboardType="numeric"
+            maxLength={5}  
+            className="rounded-xl w-40 h-10 bg-white placeholder:p-2"
+            placeholder="Valor plantão P"
+            value={ValueP}
+            onChangeText={(text) => SetValueP(text)}
+          />
+          {/* Input valor PF*/}
+          <TextInput
+            keyboardType="numeric"
+            maxLength={5}
+            className="rounded-xl w-40 h-10 bg-white placeholder:p-2"
+            placeholder="Valor plantão PF"
+            value={ValuePF}
+            onChangeText={(text) => SetValuePF(text)}
+          />
         </View>
         <View className="w-full flex-row px-1 gap-x-7">
-          <TextInput keyboardType="numeric" className="rounded-xl w-40 h-10 bg-white placeholder:p-2" placeholder="Valor plantão N" value={ValueN} onChangeText={(text) => SetValueN(text)}></TextInput>
-          <TextInput keyboardType="numeric" className="rounded-xl w-40 h-10 bg-white placeholder:p-2" placeholder="Valor plantão NF" value={ValueNF} onChangeText={(text) => SetValueNF(text)}></TextInput>
+          {/*Input valor N*/}
+          <TextInput
+            keyboardType="numeric"
+            maxLength={5}
+            className="rounded-xl w-40 h-10 bg-white placeholder:p-2" 
+            placeholder="Valor plantão N"
+            value={ValueN} 
+            onChangeText={(text) => SetValueN(text)}>
+          </TextInput>
+          {/*Input valor NF*/}
+          <TextInput
+            keyboardType="numeric"
+            maxLength={5} 
+            className="rounded-xl w-40 h-10 bg-white placeholder:p-2" 
+            placeholder="Valor plantão NF" 
+            value={ValueNF} 
+            onChangeText={(text) => SetValueNF(text)}>
+          </TextInput>
         </View>
+
         <View className="w-full flex-row px-1 gap-x-7">
-          <TextInput keyboardType="numeric" className="rounded-xl w-40 h-10 bg-white placeholder:p-2" placeholder="Taxa administrativa" value={ValueTaxa} onChangeText={(text) => SetValueTaxa(text)}></TextInput>
+          <TextInput keyboardType="numeric" maxLength={4} className="rounded-xl w-40 h-10 bg-white placeholder:p-2" placeholder="Taxa administrativa" value={ValueTaxa} onChangeText={(text) => SetValueTaxa(text)}></TextInput>
           <TextInput keyboardType="numeric" className="rounded-xl w-40 h-10 bg-white placeholder:p-2" placeholder="Taxa INSS" value={ValueINSS} onChangeText={(text) => SetValueINSS(text)}></TextInput>
         </View>
       </View>
@@ -182,7 +217,7 @@ function Salario() { //Função final para valor Líquido
         <View className="bg-BackgCartao w-80 h-44 rounded-2xl border border-BrancoC">
 
           <View className="  w-[100%] h-[30%] rounded-t-2xl flex-row items-center justify-between px-4 font-medium">
-            <Text className="text-white text-sm">Saldo do mês: {ValueLiq.toFixed(2)}</Text>
+            <Text className="text-white text-sm">Saldo do mês: {"R$" + ValueLiq.toFixed(2)}</Text>
             <Text className="text-white">CalculaCoop</Text>
           </View>
 
@@ -193,9 +228,9 @@ function Salario() { //Função final para valor Líquido
           <View className="w-[100%] h-[45%] rounded-b-2xl px-4">
             <View className="w-[100%] h-[100%] justify-between flex-row">
               <View>
-                <Text className="text-white text-sm">Valor do INSS: {ValueDescINSS.toFixed(2)}</Text>
-                <Text className="text-white text-sm">Valor do ADM: {ValueTaxaADM.toFixed(2)}</Text>
-                <Text className="text-white text-sm">Valor do IRRF: {ValueIRRF.toFixed(2)} </Text>
+                <Text className="text-white text-sm">Valor do INSS: {"R$" + ValueDescINSS.toFixed(2)}</Text>
+                <Text className="text-white text-sm">Valor do ADM: {"R$" + ValueTaxaADM.toFixed(2)}</Text>
+                <Text className="text-white text-sm">Valor do IRRF: {"R$" + ValueIRRF.toFixed(2)} </Text>
               </View>
               <View className="items-end justify-end py-6 px-3">
                 <Text>?</Text>
